@@ -39,6 +39,19 @@ export default {
   plugins: [],
 }
 #+end_src
-
+** Prisma
+*** Installation
+**** Development
+#+begin_src bash
+npm i -D prisma
+#+end_src
+**** Production
+#+begin_src bash
+npm i @prisma/client
+#+end_src
+*** Configuration
+#+begin_src bash
+npx prisma init
+#+end_src
 * Extra notes
 * Deployment
