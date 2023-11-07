@@ -1,0 +1,13 @@
+#+title: React & Vite Project 06
+
+* About
++ Simple React project using the NextJS framework
+
+* Dependencies
+** Axios
++ Consuming API with axios to simplify the code
+#+begin_src bash
+npm i axios
+#+end_src
+* Extra notes
+* Deployment

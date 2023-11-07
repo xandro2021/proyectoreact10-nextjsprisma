@@ -1,0 +1,132 @@
+#+title: Notas
+
+* Consumir API con Next
+** Server Side
+Las funciones correspondientes solo funcionan dentro la carpeta de pages. No sirven dentro de components
+*** Individual
+**** getServerSideProps
++ Los datos se obtienen en cada request (Server Side Rendering - SSR)
++ Se utiliza cuando la informacion cambia de forma continua en cada request o donde la pagina se actualiza cada poco tiempo
+***** Ejemplo en Ruta Normal
+#+begin_src js
+export async function getServerSideProps() {
+  // Server Side Fetch
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?populate=imagen`);
+  const { data: guitarras } = await respuesta.json();
+
+  // Esto es lo que siempre debe de contener esta funcion. Esto hace que guitarras este disponible en funcion Tienda
+  return {
+    props: {
+      guitarras
+    }
+  }
+}
+
+#+end_src
+***** Ejemplo en Ruta Dinamica
++ En ruta dinamica hacemos uso del parametro que viene con la funcion para obtener la consulta de manera que tambien se pueda obtener el query y con ello poder hacer dinamico la consulta
+#+begin_src js
+export async function getServerSideProps({ query: { url } }) {
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=imagen`);
+  const { data: guitarra } = await respuesta.json();
+
+  return {
+    props: {
+      guitarra
+    }
+  }
+}
+#+end_src
+*** En Conjunto
+**** getStaticProps
++ Obtener los datos cuando se crea el build (Static Site Generation - SSG)
++ Se utiliza cuando la informacion no cambia en cada request: Pagina informativa, documentacion, tramites, anuncios
+***** Ejemplo en Ruta Normal
+#+begin_src js
+// Hay que hacer un build cada vez que se actualice las guitarras
+// Primero se ejecuta la parte del servidor y luego la del cliente
+export async function getStaticProps() {
+  // Server Side Fetch
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?populate=imagen`);
+  const { data: guitarras } = await respuesta.json();
+
+  // Esto es lo que siempre debe de contener esta funcion. Esto hace que guitarras este disponible en funcion Tienda
+  return {
+    props: {
+      guitarras
+    }
+  }
+}
+
+export default Tienda;
+#+end_src
+***** Ejemplo en Ruta Dinamica
++ En Ruta Dinamica para funcionar requiere de forma obligatoria el uso de la funcion getStaticPaths
+#+begin_src js
+export async function getStaticPaths() {
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras`);
+  const { data } = await respuesta.json();
+
+  const paths = data.map(guitarra => ({
+    params: {
+      url: guitarra.attributes.url
+    }
+  }));
+
+  console.log(paths);
+
+  return {
+    paths,
+    fallback: false // para enviar error 404 en caso de que el usuario visite una guitarra que no existe
+  }
+}
+
+export async function getStaticProps({ params: { url } }) {
+  const respuesta = await fetch(`${process.env.API_URL}/guitarras?filters[url]=${url}&populate=imagen`);
+  const { data: guitarra } = await respuesta.json();
+
+  return {
+    props: {
+      guitarra
+    }
+  }
+}
+#+end_src
+**** getStaticPaths (Se usa mas que todo en ruta dinamica)
+Obtener el listado de paginas que se van a crear cuando se realiza el build (Static Site Generation)
+** Client Side
+useEffect con fetch o SWR (Libreria para usar axios)
+
+* Modificaciones a next.config.js
+Para este proyecto se agregó el objeto de images al archivo de config, el cual tiene una propiedad para dar formato a las imagenes y la otra para poder usar imagenes de recursos externos
+#+begin_src json
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    domains: ['res.cloudinary.com']
+  }
+}
+
+module.exports = nextConfig
+#+end_src
+
+* Routing Dinamico
+Al igual que en el Remix se crea la carpeta guitarras y a dentro se agrega un archivo con nombre entre corchetes [url].js
+De manera que al entrar a la direccion /guitarras/nombreDinamico se renderice el archivo [url]. Se puede usar useRouter para leer el nombreDinamico de la guitarra que se esta viendo. El objeto que retorna el useRouter contiene una propiedad llamada query la cual tendra como llave el mismo nombre del archivo en este caso "url" y el valor sera el nombre dinamico que en este caso sera el modelo de la guitarra.
+#+begin_src js
+import { useRouter } from 'next/router';
+
+const Producto = () => {
+  const router = useRouter();
+  console.log(router.query.url);
+  return (
+    <div>url    </div>
+  );
+};
+
+export default Producto;
+
+#+end_src
