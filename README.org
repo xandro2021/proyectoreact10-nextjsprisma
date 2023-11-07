@@ -1,4 +1,4 @@
-#+title: React & Vite Project 06
+#+title: React & NextJS/Prisma
 
 * About
 + Simple React project using the NextJS framework
