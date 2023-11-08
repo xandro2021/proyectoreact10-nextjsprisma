@@ -9,6 +9,10 @@
 #+begin_src bash
 npm i axios
 #+end_src
+** ts-node
+#+begin_src bash
+npm i ts-node
+#+end_src
 ** TailwindCSS
 *** Installation
 #+begin_src bash
@@ -50,8 +54,42 @@ npm i -D prisma
 npm i @prisma/client
 #+end_src
 *** Configuration
+**** Start
 #+begin_src bash
 npx prisma init
+#+end_src
+**** .env
+#+begin_src
+DATABASE_URL="databaseBrand://user:pass@localhost:port/databaseName"
+#+end_src
+*** Usage
+**** Creata data models in prisma/scheme.prisma
+Due to how small the project is, it is better to directly check the file instead of writing it again here
+**** Update the Database schema/model
+Used everytime the schema.prisma is modified. It will ask for name according with the change
+#+begin_src bash
+npx prisma migrate dev
+#+end_src
+**** Reset the Database (Delete all the data)
+#+begin_src bash
+npx prisma migrate reset
+#+end_src
+**** Display Database
+#+begin_src bash
+npx prisma studio
+#+end_src
+**** Seed the DB
++ Create a folder data with the files categorias.ts and productos.ts
++ Create a seed.ts
++ Modify package.json and add after "scripts":
+#+begin_src json
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+#+end_src
++ Run the command in the terminal:
+#+begin_src bash
+npx prisma db seed
 #+end_src
 * Extra notes
 * Deployment
