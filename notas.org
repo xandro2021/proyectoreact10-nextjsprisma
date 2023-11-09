@@ -96,7 +96,10 @@ export async function getStaticProps({ params: { url } }) {
 Obtener el listado de paginas que se van a crear cuando se realiza el build (Static Site Generation)
 ** Client Side
 useEffect con fetch o SWR (Libreria para usar axios)
-
+** Server Side Alternative
++ En la carpeta api siempre se corre en el lado del servidor
++ No incrementan el tamaño del bundle del archivo una vez es compilado
++ Son diseñados para crear un API con Next.js
 * Modificaciones a next.config.js
 Para este proyecto se agregó el objeto de images al archivo de config, el cual tiene una propiedad para dar formato a las imagenes y la otra para poder usar imagenes de recursos externos
 #+begin_src json

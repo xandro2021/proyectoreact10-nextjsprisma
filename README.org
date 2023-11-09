@@ -91,5 +91,35 @@ npx prisma studio
 #+begin_src bash
 npx prisma db seed
 #+end_src
+**** Get data from the DB with NextJS (Query DB)
+***** ServersideProps
++ The result is return as a props that will be automatically available in the main components props paramerter ({ categorias })
++ It is possible to use the alternative function in notes
++ It is USED when you want to display the query results in a component
+#+begin_src js
+export const getServerSideProps = async () => {
+
+  const prisma = new PrismaClient();
+  // Consultar Base de Datos
+  const categorias = await prisma.categoria.findMany();
+
+  return {
+    props: {
+      categorias,
+    }
+  }
+}
+#+end_src
+***** api folder
++ The files in the api folder are always run in ther server side. It is possible to get the data base query result
++ It is used when you want to save a query result in the useState instance
+#+begin_src js
+export default async function handler(req, res) {
+  const prisma = new PrismaClient();
+  const categorias = await prisma.categoria.findMany();
+
+  res.status(200).json(categorias);
+}
+#+end_src
 * Extra notes
 * Deployment
