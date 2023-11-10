@@ -125,5 +125,30 @@ export default async function handler(req, res) {
   res.status(200).json(categorias);
 }
 #+end_src
+** React Modal
+*** Installation
+#+begin_src bash
+npm i react-modal
+#+end_src
+*** Configuration
++ It is set in Layout.js
++ See the full example in the real file
+#+NAME: layout.js
+#+begin_src js
+import Modal from 'react-modal';
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+Modal.setAppElement("#__next");
+#+end_src
 * Extra notes
 * Deployment
