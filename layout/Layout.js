@@ -15,7 +15,9 @@ const Layout = ({ children, pagina }) => {
         </aside>
 
         <main className="md-8/12 xl:w-3/4 2xl:w-4/5 h-screen overflow-y-scroll">
-          {children}
+          <div className="p-10">
+            {children}
+          </div>
         </main>
       </div>
     </>
