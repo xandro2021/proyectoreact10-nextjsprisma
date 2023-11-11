@@ -8,6 +8,7 @@ const QuioscoProvider = ({ children }) => {
   const [categoriaActual, setCategoriaActual] = useState({});
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
+  const [pedido, setPedido] = useState([]);
 
   useEffect(() => {
     const obtenerCategorias = async () => {
