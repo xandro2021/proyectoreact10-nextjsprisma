@@ -150,5 +150,26 @@ const customStyles = {
 
 Modal.setAppElement("#__next");
 #+end_src
+** React Toastify (Alertas)
+*** Installation
+#+begin_src bash
+npm i react-toastify
+#+end_src
+*** Configuration
++ It is set in Layout.js
++ See the full example in the real file
+#+NAME: layout.js
+#+begin_src js
+import { ToastContainer } from 'react-toastify';
+
+<ToastContainer />
+#+end_src
++ Once is register in the parent component in this case Layout, it can be call by importing toast in the component where is going to be used
+#+NAME: QuioscoProvider.jsx
+#+begin_src js
+import { toast } from 'react-toastify';
+// Display the toast with the message
+toast.success('Pedido Correctamente Modificado');
+#+end_src
 * Extra notes
 * Deployment
