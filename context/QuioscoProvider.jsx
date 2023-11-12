@@ -39,7 +39,7 @@ const QuioscoProvider = ({ children }) => {
     setModal(!modal);
   };
 
-  const handleAgregarPedido = ({ categoriaId, imagen, ...producto }) => {
+  const handleAgregarPedido = ({ categoriaId, ...producto }) => {
 
     if (pedido.some(productoState => productoState.id === producto.id)) {
 
