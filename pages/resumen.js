@@ -4,7 +4,6 @@ import ResumenProducto from '../components/ResumenProducto';
 
 const Resumen = () => {
   const { pedido } = useQuiosco();
-  console.log(pedido);
 
   return (
     <Layout pagina="Resumen">
