@@ -9,6 +9,14 @@ const pasos = [
 const Pasos = () => {
   const router = useRouter();
 
+  const calcularProgreso = () => {
+    switch (router.pathname) {
+      case '/': return 2;
+      case '/resumen': return 50;
+      default: return 100;
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between mb-5">
@@ -23,6 +31,10 @@ const Pasos = () => {
             {paso.nombre}
           </button>
         ))}
+      </div>
+
+      <div className="bg-gray-100 mb-10">
+        <div style={{ width: `${calcularProgreso()}%` }} className="rounded-full bg-amber-500 text-xs leading-none h-2 text-center text-white"> </div>
       </div>
 
     </>

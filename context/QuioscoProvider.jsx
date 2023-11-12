@@ -56,6 +56,7 @@ const QuioscoProvider = ({ children }) => {
     setModal(false);
   };
 
+
   return (
     <QuioscoContext.Provider
       value={{
