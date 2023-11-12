@@ -1,6 +1,7 @@
 import { useState, useEffect, createContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useRouter } from 'next/router';
 
 const QuioscoContext = createContext();
 
@@ -10,6 +11,7 @@ const QuioscoProvider = ({ children }) => {
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
   const [pedido, setPedido] = useState([]);
+  const router = useRouter();
 
   useEffect(() => {
     const obtenerCategorias = async () => {
@@ -29,6 +31,8 @@ const QuioscoProvider = ({ children }) => {
   const handleClickCategoria = id => {
     const [categoria] = categorias.filter(categoriaStatement => categoriaStatement.id === id);
     setCategoriaActual(categoria);
+    // Redireccionar al usuario a la pagina principal que muestra los productos de dicha categoria
+    router.push('/');
   };
 
   const handleSetProducto = producto => {
