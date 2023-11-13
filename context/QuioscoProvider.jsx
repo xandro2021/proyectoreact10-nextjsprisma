@@ -11,6 +11,8 @@ const QuioscoProvider = ({ children }) => {
   const [producto, setProducto] = useState({});
   const [modal, setModal] = useState(false);
   const [pedido, setPedido] = useState([]);
+  const [nombre, setNombre] = useState('');
+
   const router = useRouter();
 
   useEffect(() => {
@@ -86,6 +88,8 @@ const QuioscoProvider = ({ children }) => {
         pedido,
         handleEditarCantidades,
         handleEliminarProducto,
+        nombre,
+        setNombre,
       }}
     >
       {children}
