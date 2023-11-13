@@ -3,13 +3,13 @@ import Layout from '../layout/Layout';
 import useQuiosco from '../hooks/useQuiosco';
 
 const Total = () => {
-  const { pedido } = useQuiosco();
+  const { pedido, nombre, setNombre } = useQuiosco();
 
   // Se usa useCallback para evitar problemas con el useEffect que demanda su uso con el useCallback, o que la funcion este dentro del useEfffect
   // Se usa useCallback para que la funcion se ejecute unicamente cuando pedido cambie
   const comprobarPedido = useCallback(() => {
-    return pedido.length === 0;
-  }, [pedido]);
+    return pedido.length === 0 || nombre === '';
+  }, [pedido, nombre]);
 
   useEffect(() => {
     comprobarPedido();
@@ -39,6 +39,8 @@ const Total = () => {
             id="nombre"
             type="text"
             className="bg-gray-200 w-full lg:w-1/3 mt-3 p-2 rounded-md"
+            value={nombre}
+            onChange={e => setNombre(e.target.value)}
           />
         </div>
 
@@ -53,8 +55,8 @@ const Total = () => {
           <input
             type="submit"
             className={`${comprobarPedido()
-                ? 'bg-indigo-100'
-                : 'bg-indigo-600 hover:bg-indigo-800 cursor-pointer'
+              ? 'bg-indigo-100'
+              : 'bg-indigo-600 hover:bg-indigo-800 cursor-pointer'
               } w-full lg:w-auto px-5 py-2 rounded uppercase font-bold text-white text-center`}
             value="Confirmar Pedido"
             disabled={comprobarPedido()}
