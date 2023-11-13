@@ -1,9 +1,10 @@
 import { useEffect, useCallback } from 'react';
 import Layout from '../layout/Layout';
 import useQuiosco from '../hooks/useQuiosco';
+import { formatearDinero } from '../helpers';
 
 const Total = () => {
-  const { pedido, nombre, setNombre } = useQuiosco();
+  const { pedido, nombre, setNombre, colocarOrden, total } = useQuiosco();
 
   // Se usa useCallback para evitar problemas con el useEffect que demanda su uso con el useCallback, o que la funcion este dentro del useEfffect
   // Se usa useCallback para que la funcion se ejecute unicamente cuando pedido cambie
@@ -14,12 +15,6 @@ const Total = () => {
   useEffect(() => {
     comprobarPedido();
   }, [pedido, comprobarPedido]);
-
-
-  const colocarOrden = e => {
-    e.preventDefault();
-    console.log('enviando orden');
-  };
 
   return (
     <Layout pagina="Total y Confirmar Pedido">
@@ -47,7 +42,7 @@ const Total = () => {
         <div className="mt-10">
           <p className="text-2xl">
             Total a pagar: {''}
-            <span className="font-bold">$200</span>
+            <span className="font-bold">{formatearDinero(total)}</span>
           </p>
         </div>
 
