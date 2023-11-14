@@ -171,5 +171,20 @@ import { toast } from 'react-toastify';
 // Display the toast with the message
 toast.success('Pedido Correctamente Modificado');
 #+end_src
+** useSWR
++ Hook to retrieve information from an API. (Query)
++ It is creaded by Vercel's team, and it is specially design to retrieve information from API
++ It can be use with Vite, Next, and so on.
++ It include real time querys, pagination, and it is a great way to keep your apps updated with a good performance
+*** Installation
+#+begin_src bash
+npm i swr
+#+end_src
+*** Use
+#+begin_src js
+  const fetcher = () => axios('/api/ordenes').then(datos => datos.data);
+
+  const { data, error, isLoading } = useSWR('/api/ordenes', fetcher);
+#+end_src
 * Extra notes
 * Deployment
