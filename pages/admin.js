@@ -6,8 +6,8 @@ import Orden from '../components/Orden';
 export default function Admin() {
 
   const fetcher = () => axios('/api/ordenes').then(datos => datos.data);
-
-  const { data, error, isLoading } = useSWR('/api/ordenes', fetcher);
+  // Refresh interval es para darle comportamiento en tiempo real en una fraccion de segundo
+  const { data, error, isLoading } = useSWR('/api/ordenes', fetcher, { refreshInterval: 100 });
 
   return (
     <AdminLayout pagina="Admin">
@@ -19,7 +19,7 @@ export default function Admin() {
           key={orden.id}
           orden={orden}
         />
-      )) : <p>No hay Ordenes Pendientes</p>}
+      )) : <p>No hay Ordenes Pendientes</p> }
     </AdminLayout>
   )
 }
